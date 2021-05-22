@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_mart/cubit/login/login_cubit.dart';
 import 'package:shop_mart/cubit/login/login_states.dart';
-import 'package:shop_mart/network/local/cache_helper.dart';
-import 'package:shop_mart/screens/home_screen.dart';
+
 import 'package:shop_mart/screens/register_screen.dart';
 import 'package:shop_mart/widgets/components.dart';
-import 'package:shop_mart/widgets/constants.dart';
 
 class ShopLoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -20,43 +18,16 @@ class ShopLoginScreen extends StatelessWidget {
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
-          // if (state is LoginSuccessState) {
-          //   if (state.loginModel.status) {
-          //     print(state.loginModel.message);
-          //     print(state.loginModel.status);
-          //     print(state.loginModel.data.token);
-          //     showToast(
-          //         text: state.loginModel.message, state: ToastStates.SUCCESS);
-          //   } else {
-          //     showToast(
-          //         text: state.loginModel.message, state: ToastStates.ERROR);
-          //     print(state.loginModel.message);
-          //   }
-          // }
-
           if (state is LoginSuccessState) {
             if (state.loginModel.status) {
               print(state.loginModel.message);
               print(state.loginModel.data.token);
-
-              CacheHelper.saveData(
-                key: 'token',
-                value: state.loginModel.data.token,
-              ).then((value) {
-                token = state.loginModel.data.token;
-
-                navigateAndFinish(
-                  context,
-                  HomeScreen(),
-                );
-              });
-            } else {
-              print(state.loginModel.message);
-
               showToast(
-                text: state.loginModel.message,
-                state: ToastStates.ERROR,
-              );
+                  text: state.loginModel.message, state: ToastStates.SUCCESS);
+            } else {
+              showToast(
+                  text: state.loginModel.message, state: ToastStates.ERROR);
+              print(state.loginModel.message);
             }
           }
         },
