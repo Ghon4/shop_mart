@@ -22,6 +22,7 @@ void main() async {
 
   bool onBoarding = CacheHelper.getData(key: 'onBoarding');
   token = CacheHelper.getData(key: 'token');
+  print(token);
 
   Widget widget;
 
@@ -48,7 +49,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => HomeCubit()..getHomeData(),
+      create: (BuildContext context) => HomeCubit()
+        ..getHomeData()
+        ..getCategory()
+        ..getFavorites(),
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, states) {},
         builder: (context, states) {
