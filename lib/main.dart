@@ -52,7 +52,8 @@ class MyApp extends StatelessWidget {
       create: (BuildContext context) => HomeCubit()
         ..getHomeData()
         ..getCategory()
-        ..getFavorites(),
+        ..getFavorites()
+        ..getUserData(),
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, states) {},
         builder: (context, states) {

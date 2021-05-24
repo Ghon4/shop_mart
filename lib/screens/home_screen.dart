@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
           var cubit = HomeCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              title: Text('Shop Mart'),
+              title: Text('Shoppy'),
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),

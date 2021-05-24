@@ -5,6 +5,7 @@ import 'package:shop_mart/model/category_model.dart';
 import 'package:shop_mart/model/change_favorites_model.dart';
 import 'package:shop_mart/model/favorite_model.dart';
 import 'package:shop_mart/model/home_model.dart';
+import 'package:shop_mart/model/login_model.dart';
 import 'package:shop_mart/network/end_points.dart';
 import 'package:shop_mart/network/remote/dio_helper.dart';
 import 'package:shop_mart/screens/categories_screen.dart';
@@ -37,11 +38,9 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(HomeLoadingData());
     DioHelper.getData(url: HOME).then((value) {
       homeModel = HomeModel.fromJson(value.data);
-      //  print(homeModel.data.banners[0].image);
       homeModel.data.products.forEach((element) {
         favorites.addAll({element.id: element.inFavorites});
       });
-      print(favorites);
       emit(HomeSuccessData());
     }).catchError((error) {
       print(error.toString());
@@ -55,7 +54,6 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(CategoryLoadingData());
     DioHelper.getData(url: GET_CATEGORIES).then((value) {
       categoryModel = CategoriesModel.fromJson(value.data);
-      //  print(categoryModel.data.data[0].image);
       emit(CategorySuccessData());
     }).catchError((error) {
       print(error.toString());
@@ -78,12 +76,11 @@ class HomeCubit extends Cubit<HomeStates> {
       token: token,
     ).then((value) {
       changeFavoritesModel = ChangeFavoritesModel.fromJson(value.data);
-      print(value.data);
 
       if (!changeFavoritesModel.status) {
         favorites[productId] = !favorites[productId];
       } else {
-        // getFavorites();
+        getFavorites();
       }
 
       emit(ChangeFavSuccessState(changeFavoritesModel));
@@ -104,12 +101,29 @@ class HomeCubit extends Cubit<HomeStates> {
       token: token,
     ).then((value) {
       favoritesModel = FavoritesModel.fromJson(value.data);
-      //printFullText(value.data.toString());
 
       emit(ShopSuccessGetFavoritesState());
     }).catchError((error) {
       print(error.toString());
       emit(ShopErrorGetFavoritesState());
+    });
+  }
+
+  LoginModel loginModel;
+
+  void getUserData() {
+    emit(UserDataLoadingState());
+
+    DioHelper.getData(
+      url: PROFILE,
+      token: token,
+    ).then((value) {
+      loginModel = LoginModel.fromJson(value.data);
+
+      emit(UserDataSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(UserDataErrorState());
     });
   }
 }

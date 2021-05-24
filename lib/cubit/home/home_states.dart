@@ -43,3 +43,9 @@ class ShopLoadingGetFavoritesState extends HomeStates {}
 class ShopSuccessGetFavoritesState extends HomeStates {}
 
 class ShopErrorGetFavoritesState extends HomeStates {}
+
+class UserDataLoadingState extends HomeStates {}
+
+class UserDataSuccessState extends HomeStates {}
+
+class UserDataErrorState extends HomeStates {}

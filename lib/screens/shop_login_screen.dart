@@ -7,6 +7,7 @@ import 'package:shop_mart/network/local/cache_helper.dart';
 import 'package:shop_mart/screens/home_screen.dart';
 import 'package:shop_mart/screens/register_screen.dart';
 import 'package:shop_mart/widgets/components.dart';
+import 'package:shop_mart/widgets/constants.dart';
 
 class ShopLoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -24,6 +25,7 @@ class ShopLoginScreen extends StatelessWidget {
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data.token)
                   .then((value) {
+                token = state.loginModel.data.token;
                 navigateAndFinish(context, HomeScreen());
               });
               showToast(
@@ -126,7 +128,7 @@ class ShopLoginScreen extends StatelessWidget {
                             ),
                             defaultTextButton(
                                 function: () {
-                                  navigateTo(context, RegisterScreen());
+                                  navigateTo(context, ShopRegisterScreen());
                                 },
                                 text: 'Register')
                           ],
