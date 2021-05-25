@@ -1,4 +1,5 @@
 import 'package:shop_mart/model/change_favorites_model.dart';
+import 'package:shop_mart/model/login_model.dart';
 
 abstract class HomeStates {}
 
@@ -49,3 +50,13 @@ class UserDataLoadingState extends HomeStates {}
 class UserDataSuccessState extends HomeStates {}
 
 class UserDataErrorState extends HomeStates {}
+
+class ShopLoadingUpdateUserState extends HomeStates {}
+
+class ShopSuccessUpdateUserState extends HomeStates {
+  final LoginModel loginModel;
+
+  ShopSuccessUpdateUserState(this.loginModel);
+}
+
+class ShopErrorUpdateUserState extends HomeStates {}

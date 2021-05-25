@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_mart/cubit/home/home_states.dart';
 import 'package:shop_mart/model/category_model.dart';
@@ -124,6 +125,32 @@ class HomeCubit extends Cubit<HomeStates> {
     }).catchError((error) {
       print(error.toString());
       emit(UserDataErrorState());
+    });
+  }
+
+  void updateUserData({
+    @required String name,
+    @required String email,
+    @required String phone,
+  }) {
+    emit(ShopLoadingUpdateUserState());
+
+    DioHelper.putData(
+      url: UPDATE_PROFILE,
+      token: token,
+      data: {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      },
+    ).then((value) {
+      loginModel = LoginModel.fromJson(value.data);
+      print(loginModel.data.name);
+
+      emit(ShopSuccessUpdateUserState(loginModel));
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopErrorUpdateUserState());
     });
   }
 }
